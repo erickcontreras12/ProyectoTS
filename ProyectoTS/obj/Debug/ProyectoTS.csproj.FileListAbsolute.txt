@@ -9,3 +9,12 @@ C:\Users\Erick Contreras\Desktop\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS.cspr
 C:\Users\Erick Contreras\Desktop\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS.exe
 C:\Users\Erick Contreras\Desktop\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS.pdb
 C:\Users\Erick Contreras\Desktop\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS.Form3.resources
+C:\Users\Erick Contreras\Source\Repos\ProyectoTS\ProyectoTS\bin\Debug\ProyectoTS.exe.config
+C:\Users\Erick Contreras\Source\Repos\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS.exe
+C:\Users\Erick Contreras\Source\Repos\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS.pdb
+C:\Users\Erick Contreras\Source\Repos\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS.csprojResolveAssemblyReference.cache
+C:\Users\Erick Contreras\Source\Repos\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS.Form1.resources
+C:\Users\Erick Contreras\Source\Repos\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS.Form2.resources
+C:\Users\Erick Contreras\Source\Repos\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS.Form3.resources
+C:\Users\Erick Contreras\Source\Repos\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS.Properties.Resources.resources
+C:\Users\Erick Contreras\Source\Repos\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS.csproj.GenerateResource.Cache

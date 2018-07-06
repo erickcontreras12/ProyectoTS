@@ -287,10 +287,6 @@ namespace ProyectoTS
             vent3.Show();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Form4 vent4 = new Form4();
-            vent4.Show();
-        }
+        
     }
 }
