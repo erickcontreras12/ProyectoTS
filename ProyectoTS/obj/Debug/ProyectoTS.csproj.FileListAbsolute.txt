@@ -18,3 +18,5 @@ C:\Users\Erick Contreras\Source\Repos\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS
 C:\Users\Erick Contreras\Source\Repos\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS.Form3.resources
 C:\Users\Erick Contreras\Source\Repos\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS.Properties.Resources.resources
 C:\Users\Erick Contreras\Source\Repos\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS.csproj.GenerateResource.Cache
+C:\Users\Erick Contreras\Source\Repos\ProyectoTS\ProyectoTS\bin\Debug\ProyectoTS.exe
+C:\Users\Erick Contreras\Source\Repos\ProyectoTS\ProyectoTS\bin\Debug\ProyectoTS.pdb

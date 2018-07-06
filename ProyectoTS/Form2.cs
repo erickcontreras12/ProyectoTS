@@ -255,7 +255,7 @@ namespace ProyectoTS
 
         private void button3_Click(object sender, EventArgs e)
         {
-            DialogResult boton = MessageBox.Show("Realmente desea salir?", "Alerta", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            DialogResult boton = MessageBox.Show("Realmente desea reiniciar?", "Alerta", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
             if (boton == DialogResult.OK)
             {
                 ClaseGeneral.nuevoJuego.Reiniciar();
