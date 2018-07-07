@@ -14,8 +14,42 @@ namespace ProyectoTS
         public bool newTurn = true;
         public List<Territorio> territorios;
         public List<Movimiento> moves, auxMoves;
-        
 
+
+
+
+        public bool gameover() {
+
+            if (player1.conquistados.Count == 0)
+            {
+
+                return true;
+            }
+            else {
+
+                return false;
+
+            }
+
+        }
+
+
+        public bool ganar()
+        {
+
+            if (player2.conquistados.Count == 0)
+            {
+
+                return true;
+            }
+            else
+            {
+
+                return false;
+
+            }
+
+        }
         /// <summary>
         /// Crea todos los territorios del mapa y llama para asignar los primeros
         /// </summary>
@@ -443,32 +477,32 @@ namespace ProyectoTS
         {
             if(o == 1)
             {
-                P.conquistados.Add(encontrarTerritorio("Australia"));
+               // P.conquistados.Add(encontrarTerritorio("Australia"));
                 asignarAmo(P, encontrarTerritorio("Australia"));
             }
             else if (o == 2)
             {
-                P.conquistados.Add(encontrarTerritorio("Argentina"));
+              //  P.conquistados.Add(encontrarTerritorio("Argentina"));
                 asignarAmo(P, encontrarTerritorio("Argentina"));
             }
             else if (o == 3)
             {
-                P.conquistados.Add(encontrarTerritorio("Mexico"));
+              //  P.conquistados.Add(encontrarTerritorio("Mexico"));
                 asignarAmo(P, encontrarTerritorio("Mexico"));
             }
             else if (o == 4)
             {
-                P.conquistados.Add(encontrarTerritorio("Congo"));
+             //   P.conquistados.Add(encontrarTerritorio("Congo"));
                 asignarAmo(P, encontrarTerritorio("Congo"));
             }
             else if (o == 5)
             {
-                P.conquistados.Add(encontrarTerritorio("Europa del Norte"));
+              //  P.conquistados.Add(encontrarTerritorio("Europa del Norte"));
                 asignarAmo(P, encontrarTerritorio("Europa del Norte"));
             }
             else if (o == 6)
             {
-                P.conquistados.Add(encontrarTerritorio("Japon"));
+              //  P.conquistados.Add(encontrarTerritorio("Japon"));
                 asignarAmo(P, encontrarTerritorio("Japon"));
             }
         }

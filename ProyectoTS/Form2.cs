@@ -115,7 +115,7 @@ namespace ProyectoTS
                  
                     int maxno = AuxiliarIA.Max(x => x.tropas);
 
-                    evaluar = AuxiliarIA.Find(x => x.tropas == maxno&&(x.vecinos.All(y=>y.tropas<2&&(y.vecinos.All(c=>c.tropas<2)))));
+                    evaluar = AuxiliarIA.Find(x => x.tropas == maxno&&(x.vecinos.Exists(y=>y.tropas<2&&(y.vecinos.Exists(c=>c.tropas<2)))));
                      
                     if (evaluar == null)
                     {
@@ -123,11 +123,12 @@ namespace ProyectoTS
                     }
 
                 }
-                foreach (Territorio vecino in evaluar.vecinos)
-                {
-                   
-                    
-                    if (vecino.amo == ClaseGeneral.nuevoJuego.player1)
+                 int minno=evaluar.vecinos.Min(x => x.tropas);
+
+              Territorio vecino= evaluar.vecinos.Find(x => x.tropas == minno);
+
+
+                if (vecino.amo == ClaseGeneral.nuevoJuego.player1)
                     {
 
                         int ataque_defensa = 3;
@@ -169,7 +170,7 @@ namespace ProyectoTS
                             nuevo.territorio2 = ClaseGeneral.nuevoJuego.encontrarTerritorio(vecino.nombre);
                             ClaseGeneral.nuevoJuego.nuevoMovimiento(ClaseGeneral.nuevoJuego.player2.nick, nuevo);
 
-                            break;
+                         
                         }
                                         
 
@@ -181,19 +182,19 @@ namespace ProyectoTS
 
                         nuevo.jugador = ClaseGeneral.nuevoJuego.player2;
                         nuevo.territorio1 = ClaseGeneral.nuevoJuego.encontrarTerritorio(evaluar.nombre);
-                        trop = obj.Next(1, nuevo.jugador.tropas + 1);
-                        nuevo.tropas = trop;
+                        trop = obj.Next(1, evaluar.tropas + 1);
+                        nuevo.tropas = 5;
 
 
 
                         //Actuliza las tropas que le quedan por asignar al IA
-                        int newTropas = ClaseGeneral.nuevoJuego.player2.tropas - trop;
+                        int newTropas = 0;
                         ClaseGeneral.nuevoJuego.player2.tropas = newTropas;
 
                         nuevo.descrip = "asignar";
                         ClaseGeneral.nuevoJuego.nuevoAsignar(ClaseGeneral.nuevoJuego.player2.nick, nuevo);
 
-
+                    nuevo.tropas = trop;
                         string t1 = evaluar.nombre; string t2 = vecino.nombre;
 
                         if (ClaseGeneral.nuevoJuego.validarConquistador(ClaseGeneral.nuevoJuego.encontrarTerritorio(t1),
@@ -209,14 +210,29 @@ namespace ProyectoTS
                         nuevo.territorio2 = ClaseGeneral.nuevoJuego.encontrarTerritorio(vecino.nombre);
                         ClaseGeneral.nuevoJuego.nuevoMovimiento(ClaseGeneral.nuevoJuego.player2.nick, nuevo);
 
-                        break;
+                       
                     }
 
-                }
+                
 
                 radioButton1.Enabled = true;
                 ClaseGeneral.nuevoJuego.EjecutarMovimientos();
                 cargarDatos();
+
+                if (ClaseGeneral.nuevoJuego.gameover()) {
+                    MessageBox.Show("GAME OVER");
+
+                    ClaseGeneral.nuevoJuego.Reiniciar();
+                    cargarDatos();
+                }
+
+
+                if (ClaseGeneral.nuevoJuego.ganar())
+                {
+                    MessageBox.Show(" USTED HA GANADO!!!!!!!!!!!!!");
+                    ClaseGeneral.nuevoJuego.Reiniciar();
+                    cargarDatos();
+                }
             }
             
             
