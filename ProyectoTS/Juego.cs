@@ -528,6 +528,7 @@ namespace ProyectoTS
                     cont1 = 1;
                     cont2 = 0;
                 }
+                newTurn = false;
             }
 
 
@@ -537,20 +538,13 @@ namespace ProyectoTS
              */
             if (player == player1.nick)
             {
-                if (cont1 != 0 || cont1 != 1)
-                {
-                    cont1 += 2;
-                }
                 mov.numMov = cont1;
-
+                cont1 += 2;
             }
             else if (player == player2.nick)
             {
-                if (cont2 != 0 || cont2 != 1)
-                {
-                    cont2 += 2;
-                }
                 mov.numMov = cont2;
+                cont2 += 2;
             }
             mov.territorio1.auxTropas -= mov.tropas;
             
@@ -577,70 +571,92 @@ namespace ProyectoTS
         /// </summary>
         public void EjecutarMovimientos()
         {
-            int contMov = 0;
-            foreach (Movimiento item in auxMoves)
+            int contMov = 0; int mov = 0;
+            Movimiento temp = new Movimiento();
+            while (auxMoves.Count != contMov)
             {
-                if (item.tropas > item.territorio1.tropas)
-                {
-                    item.tropas = item.territorio1.tropas;
-                }
-                else if (item.territorio1.tropas == 0)
-                {
-                    auxMoves.Remove(item);
-                    break;
-                }
+                temp = buscarMovimiento(mov, auxMoves);
 
-                /*Valida que el movimiento evaluado sea el siguiente en numero
-                 dependiendo del contador para que siga el orden de movimientos
-                 intercalados entre los jugadores*/
-                if (contMov == item.numMov)
+                if (temp != null)
                 {
-                    /*Valida si el conquistador es el mismo por si en el movimiento
-                 * anterior cambia de amo el territorio entonces actualiza el 
-                 * movimiento*/
-                    if (validarConquistador(item.territorio1, item.territorio2))
+                    if (temp.tropas > temp.territorio1.tropas)
                     {
-                        item.descrip = "mover";
+                        temp.tropas = temp.territorio1.tropas;
                     }
-                    else
+                    else if (temp.territorio1.tropas == 0)
                     {
-                        item.descrip = "atacar";
+                        auxMoves.Remove(temp);
+                        break;
                     }
 
-
-                    if (item.descrip == "mover")
+                    /*Valida que el movimiento evaluado sea el siguiente en numero
+                     dependiendo del contador para que siga el orden de movimientos
+                     intercalados entre los jugadores*/
+                    if (contMov == temp.numMov)
                     {
-                        item.territorio2.tropas += item.tropas;
-                        item.territorio1.tropas -= item.tropas;
-
-
-                    }
-                    else if (item.descrip == "atacar")
-                    {
-                        /*Si las tropas enviadas son mas que las que estan
-                         * entonces el territorio cambia de amo*/
-                        if (item.territorio2.tropas < item.tropas && (item.territorio2.tropas - item.tropas) < 0)
+                        /*Valida si el conquistador es el mismo por si en el movimiento
+                     * anterior cambia de amo el territorio entonces actualiza el 
+                     * movimiento*/
+                        if (validarConquistador(temp.territorio1, temp.territorio2))
                         {
-                            asignarAmo(item.jugador, item.territorio2);
+                            temp.descrip = "mover";
                         }
-                        item.territorio2.tropas = Math.Abs(item.territorio2.tropas - item.tropas);
-                        item.territorio1.tropas -= item.tropas;
+                        else
+                        {
+                            temp.descrip = "atacar";
+                        }
+
+
+                        if (temp.descrip == "mover")
+                        {
+                            temp.territorio2.tropas += temp.tropas;
+                            temp.territorio1.tropas -= temp.tropas;
+
+
+                        }
+                        else if (temp.descrip == "atacar")
+                        {
+                            /*Si las tropas enviadas son mas que las que estan
+                             * entonces el territorio cambia de amo*/
+                            if (temp.territorio2.tropas < temp.tropas && (temp.territorio2.tropas - temp.tropas) < 0)
+                            {
+                                asignarAmo(temp.jugador, temp.territorio2);
+                            }
+                            temp.territorio2.tropas = Math.Abs(temp.territorio2.tropas - temp.tropas);
+                            temp.territorio1.tropas -= temp.tropas;
+                        }
+
+                        temp.territorio1.auxTropas = temp.territorio1.tropas;
+                        temp.territorio2.auxTropas = temp.territorio2.tropas;
+
+                        moves.Add(temp);
+                        contMov++;
                     }
-
-                    item.territorio1.auxTropas = item.territorio1.tropas;
-                    item.territorio2.auxTropas = item.territorio2.tropas;
-
-                    moves.Add(item);
-
                 }
-                contMov++;
+                mov++;
             }
+                
+            
             
 
             auxMoves = new List<Movimiento>();
             darNuevasTropas(player1);
             darNuevasTropas(player2);
             newTurn = true;
+        }
+
+        public Movimiento buscarMovimiento(int n, List<Movimiento> mov)
+        {
+            Movimiento aux = new Movimiento();
+            foreach (Movimiento item in mov)
+            {
+                if (item.numMov == n)
+                {
+                    aux = item;
+                    return aux;
+                }
+            }
+            return null;
         }
 
         /// <summary>
