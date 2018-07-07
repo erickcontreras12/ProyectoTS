@@ -21,7 +21,7 @@ namespace ProyectoTS
 
         public Jugador()
         {
-            nick = "";
+            nick = "IA";
             tropas = 5;
             conquistados = new List<Territorio>();
         }
