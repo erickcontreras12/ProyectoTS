@@ -319,7 +319,7 @@ namespace ProyectoTS
                 {
                     foreach (Territorio item in territorios)
                     {
-                        if (item.nombre == "Siberia" || item.nombre == "Japon" || item.nombre == "Rusia" || item.nombre == "India" || item.nombre == "Inglaterra")
+                        if (item.nombre == "Siberia" || item.nombre == "Japon" || item.nombre == "Rusia" || item.nombre == "India" || item.nombre == "Indonesia")
                         {
                             territorios.ToArray()[i].vecinos.Add(item);
                         }
@@ -551,6 +551,17 @@ namespace ProyectoTS
         {
             foreach (Movimiento item in auxMoves)
             {
+                if (item.tropas > item.territorio1.tropas)
+                {
+                    item.tropas = item.territorio1.tropas;
+                }
+                else if (item.territorio1.tropas == 0)
+                {
+                    auxMoves.Remove(item);
+                    break;
+                }
+
+
                 if (item.descrip == "mover")
                 {
                     item.territorio2.tropas += item.tropas;
@@ -590,13 +601,14 @@ namespace ProyectoTS
                         item.territorio2.tropas = Math.Abs(item.territorio2.tropas - item.tropas);
                         item.territorio1.tropas -= item.tropas;
                     }
-                    
+
                 }
                 item.territorio1.auxTropas = item.territorio1.tropas;
                 item.territorio2.auxTropas = item.territorio2.tropas;
 
                 moves.Add(item);
             }
+            
 
             auxMoves = new List<Movimiento>();
             darNuevasTropas(player1);
