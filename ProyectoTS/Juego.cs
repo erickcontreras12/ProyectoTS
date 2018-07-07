@@ -573,7 +573,7 @@ namespace ProyectoTS
                 {
                     /*Si las tropas enviadas son mas que las que estan
                      * entonces el territorio cambia de amo*/
-                    if (item.territorio2.tropas < item.tropas && (item.territorio2.tropas - item.tropas) > 0)
+                    if (item.territorio2.tropas < item.tropas && (item.territorio2.tropas - item.tropas) < 0)
                     {
                         asignarAmo(item.jugador, item.territorio2);
                     }
@@ -594,7 +594,7 @@ namespace ProyectoTS
                     else
                     {
                         item.descrip = "atacar";
-                        if (item.territorio2.tropas < item.tropas && (item.territorio2.tropas - item.tropas) > 0)
+                        if (item.territorio2.tropas < item.tropas && (item.territorio2.tropas - item.tropas) < 0)
                         {
                             asignarAmo(item.jugador, item.territorio2);
                         }
