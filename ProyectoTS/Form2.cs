@@ -287,6 +287,7 @@ namespace ProyectoTS
             {
                 comboBox2.Text = "";
                 comboBox2.Enabled = false;
+                comboBox3.Items.Clear();
                 for (int i = 0; i < ClaseGeneral.nuevoJuego.player1.tropas; i++)
                 {
                     comboBox3.Items.Add(i + 1);
@@ -387,14 +388,16 @@ namespace ProyectoTS
         {
             if (!string.IsNullOrEmpty(comboBox1.Text))
             {
+                comboBox2.Items.Clear();
                 foreach (Territorio item in ClaseGeneral.nuevoJuego.encontrarTerritorio(comboBox1.Text).vecinos)
                 {
                     comboBox2.Items.Add(item.nombre);
                 }
 
-
+                
                 if (radioButton2.Checked)
                 {
+                    comboBox3.Items.Clear();
                     for (int i = 0; i < ClaseGeneral.nuevoJuego.encontrarTerritorio(comboBox1.Text).auxTropas; i++)
                     {
                         comboBox3.Items.Add(i + 1);
@@ -440,6 +443,7 @@ namespace ProyectoTS
             DialogResult boton = MessageBox.Show("Realmente desea reiniciar?", "Alerta", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
             if (boton == DialogResult.OK)
             {
+                radioButton1.Enabled = true;
                 ClaseGeneral.nuevoJuego.Reiniciar();
                 cargarDatos();
             }

@@ -477,32 +477,26 @@ namespace ProyectoTS
         {
             if(o == 1)
             {
-               // P.conquistados.Add(encontrarTerritorio("Australia"));
                 asignarAmo(P, encontrarTerritorio("Australia"));
             }
             else if (o == 2)
             {
-              //  P.conquistados.Add(encontrarTerritorio("Argentina"));
                 asignarAmo(P, encontrarTerritorio("Argentina"));
             }
             else if (o == 3)
             {
-              //  P.conquistados.Add(encontrarTerritorio("Mexico"));
                 asignarAmo(P, encontrarTerritorio("Mexico"));
             }
             else if (o == 4)
             {
-             //   P.conquistados.Add(encontrarTerritorio("Congo"));
                 asignarAmo(P, encontrarTerritorio("Congo"));
             }
             else if (o == 5)
             {
-              //  P.conquistados.Add(encontrarTerritorio("Europa del Norte"));
                 asignarAmo(P, encontrarTerritorio("Europa del Norte"));
             }
             else if (o == 6)
             {
-              //  P.conquistados.Add(encontrarTerritorio("Japon"));
                 asignarAmo(P, encontrarTerritorio("Japon"));
             }
         }
@@ -545,7 +539,7 @@ namespace ProyectoTS
             {
                 if (cont1 != 0 || cont1 != 1)
                 {
-                    cont1++;
+                    cont1 += 2;
                 }
                 mov.numMov = cont1;
 
@@ -554,7 +548,7 @@ namespace ProyectoTS
             {
                 if (cont2 != 0 || cont2 != 1)
                 {
-                    cont2++;
+                    cont2 += 2;
                 }
                 mov.numMov = cont2;
             }
@@ -583,6 +577,7 @@ namespace ProyectoTS
         /// </summary>
         public void EjecutarMovimientos()
         {
+            int contMov = 0;
             foreach (Movimiento item in auxMoves)
             {
                 if (item.tropas > item.territorio1.tropas)
@@ -595,39 +590,35 @@ namespace ProyectoTS
                     break;
                 }
 
-
-                if (item.descrip == "mover")
+                /*Valida que el movimiento evaluado sea el siguiente en numero
+                 dependiendo del contador para que siga el orden de movimientos
+                 intercalados entre los jugadores*/
+                if (contMov == item.numMov)
                 {
-                    item.territorio2.tropas += item.tropas;
-                    item.territorio1.tropas -= item.tropas;
-
-
-                }
-                else if (item.descrip == "atacar")
-                {
-                    /*Si las tropas enviadas son mas que las que estan
-                     * entonces el territorio cambia de amo*/
-                    if (item.territorio2.tropas < item.tropas && (item.territorio2.tropas - item.tropas) < 0)
-                    {
-                        asignarAmo(item.jugador, item.territorio2);
-                    }
-                    item.territorio2.tropas = Math.Abs(item.territorio2.tropas - item.tropas);
-                    item.territorio1.tropas -= item.tropas;
-                }
-                /*Por si no se etiqueta el movimiento valida si los amos
-                 de los territorios son iguales y realiza los procedimientos
-                 de arriba*/
-                else
-                {
+                    /*Valida si el conquistador es el mismo por si en el movimiento
+                 * anterior cambia de amo el territorio entonces actualiza el 
+                 * movimiento*/
                     if (validarConquistador(item.territorio1, item.territorio2))
                     {
                         item.descrip = "mover";
-                        item.territorio2.tropas += item.tropas;
-                        item.territorio1.tropas -= item.tropas;
                     }
                     else
                     {
                         item.descrip = "atacar";
+                    }
+
+
+                    if (item.descrip == "mover")
+                    {
+                        item.territorio2.tropas += item.tropas;
+                        item.territorio1.tropas -= item.tropas;
+
+
+                    }
+                    else if (item.descrip == "atacar")
+                    {
+                        /*Si las tropas enviadas son mas que las que estan
+                         * entonces el territorio cambia de amo*/
                         if (item.territorio2.tropas < item.tropas && (item.territorio2.tropas - item.tropas) < 0)
                         {
                             asignarAmo(item.jugador, item.territorio2);
@@ -636,11 +627,13 @@ namespace ProyectoTS
                         item.territorio1.tropas -= item.tropas;
                     }
 
-                }
-                item.territorio1.auxTropas = item.territorio1.tropas;
-                item.territorio2.auxTropas = item.territorio2.tropas;
+                    item.territorio1.auxTropas = item.territorio1.tropas;
+                    item.territorio2.auxTropas = item.territorio2.tropas;
 
-                moves.Add(item);
+                    moves.Add(item);
+
+                }
+                contMov++;
             }
             
 
