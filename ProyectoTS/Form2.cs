@@ -27,6 +27,48 @@ namespace ProyectoTS
 
         }
 
+       /* public void defender(Territorio evaluar)
+        {
+            Movimiento nuevo = new Movimiento();
+            int trop = 0;
+            Random obj = new Random();
+            nuevo.jugador = ClaseGeneral.nuevoJuego.player2;
+            nuevo.territorio1 = ClaseGeneral.nuevoJuego.encontrarTerritorio(evaluar.nombre);
+            trop = obj.Next(1, nuevo.jugador.tropas + 1);
+            nuevo.tropas = trop;
+
+
+
+            //Actuliza las tropas que le quedan por asignar al IA
+            int newTropas = ClaseGeneral.nuevoJuego.player2.tropas - trop;
+            ClaseGeneral.nuevoJuego.player2.tropas = newTropas;
+
+            nuevo.descrip = "asignar";
+            ClaseGeneral.nuevoJuego.nuevoAsignar(ClaseGeneral.nuevoJuego.player2.nick, nuevo);
+
+
+            string t1 = evaluar.nombre; string t2 = vecino.nombre;
+
+            if (ClaseGeneral.nuevoJuego.validarConquistador(ClaseGeneral.nuevoJuego.encontrarTerritorio(t1),
+                ClaseGeneral.nuevoJuego.encontrarTerritorio(t2)))
+            {
+                nuevo.descrip = "mover";
+            }
+            else
+            {
+                nuevo.descrip = "atacar";
+            }
+
+            nuevo.territorio2 = ClaseGeneral.nuevoJuego.encontrarTerritorio(vecino.nombre);
+            ClaseGeneral.nuevoJuego.nuevoMovimiento(ClaseGeneral.nuevoJuego.player2.nick, nuevo);
+
+        }
+
+        public void atacar()
+        {
+
+        }*/
+
         /// <summary>
         /// Boton para terminar el turno y que se ejecuten todos los 
         /// movimientos guardados
@@ -54,12 +96,37 @@ namespace ProyectoTS
 
                 opc1 = obj.Next(0, AuxiliarIA.Count - 1);
 
+                Territorio evaluar;
+            
+               
 
-                Territorio evaluar = AuxiliarIA.ElementAt(opc1);
 
-                foreach (Territorio vecino in evaluar.vecinos)
+
+
+                if (AuxiliarIA.Exists(x=>(x.tropas<3)&&x.vecinos.Exists(y=>y.amo.Equals(ClaseGeneral.nuevoJuego.player1)))){
+
+                    evaluar = AuxiliarIA.Find(x => (x.tropas < 3) && x.vecinos.Exists(y => y.amo.Equals(ClaseGeneral.nuevoJuego.player1)));
+
+                    
+                }
+                else
                 {
 
+                 
+                    int maxno = AuxiliarIA.Max(x => x.tropas);
+
+                    evaluar = AuxiliarIA.Find(x => x.tropas == maxno&&(x.vecinos.All(y=>y.tropas<2&&(y.vecinos.All(c=>c.tropas<2)))));
+                     
+                    if (evaluar == null)
+                    {
+                        evaluar = AuxiliarIA.Find(x => x.tropas == maxno);
+                    }
+
+                }
+                foreach (Territorio vecino in evaluar.vecinos)
+                {
+                   
+                    
                     if (vecino.amo == ClaseGeneral.nuevoJuego.player1)
                     {
 
@@ -104,15 +171,7 @@ namespace ProyectoTS
 
                             break;
                         }
-                        else if (ataque_defensa == 1)
-                        {
-
-                        }
-
-
-                    }
-                    else if (vecino.amo == ClaseGeneral.nuevoJuego.player2)
-                    {
+                                        
 
                     }
                     else

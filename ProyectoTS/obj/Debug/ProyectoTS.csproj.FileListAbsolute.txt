@@ -42,3 +42,14 @@ C:\Users\Erick Contreras\Desktop\URL\2018\Segundo Interciclo 2018\Teoria de Sist
 C:\Users\Erick Contreras\Desktop\URL\2018\Segundo Interciclo 2018\Teoria de Sistemas\Proyecto\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS.Form3.resources
 C:\Users\Erick Contreras\Desktop\URL\2018\Segundo Interciclo 2018\Teoria de Sistemas\Proyecto\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS.Properties.Resources.resources
 C:\Users\Erick Contreras\Desktop\URL\2018\Segundo Interciclo 2018\Teoria de Sistemas\Proyecto\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS.csproj.GenerateResource.Cache
+C:\Users\godin\Source\Repos\ProyectoTS\ProyectoTS\bin\Debug\ProyectoTS.exe.config
+C:\Users\godin\Source\Repos\ProyectoTS\ProyectoTS\bin\Debug\ProyectoTS.exe
+C:\Users\godin\Source\Repos\ProyectoTS\ProyectoTS\bin\Debug\ProyectoTS.pdb
+C:\Users\godin\Source\Repos\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS.csprojResolveAssemblyReference.cache
+C:\Users\godin\Source\Repos\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS.Form1.resources
+C:\Users\godin\Source\Repos\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS.Form2.resources
+C:\Users\godin\Source\Repos\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS.Form3.resources
+C:\Users\godin\Source\Repos\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS.Properties.Resources.resources
+C:\Users\godin\Source\Repos\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS.csproj.GenerateResource.Cache
+C:\Users\godin\Source\Repos\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS.exe
+C:\Users\godin\Source\Repos\ProyectoTS\ProyectoTS\obj\Debug\ProyectoTS.pdb
