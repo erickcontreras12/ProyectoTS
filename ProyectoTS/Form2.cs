@@ -70,41 +70,43 @@ namespace ProyectoTS
                         int minno = evaluar.vecinos.Min(x => x.tropas);
 
                         Territorio vecino = evaluar.vecinos.Find(x => x.tropas == minno);
-                        if (vecino.amo == ClaseGeneral.nuevoJuego.player1)
+                    if (vecino.amo == ClaseGeneral.nuevoJuego.player1)
+                    {
+
+                        int ataque_defensa = 3;
+                        ataque_defensa = obj.Next(0, 2);
+
+                        if (ataque_defensa == 0)
                         {
 
-                            int ataque_defensa = 3;
-                            ataque_defensa = obj.Next(0, 2);
+                            Movimiento nuevo = new Movimiento();
+                            int trop = 0;
 
-                            if (ataque_defensa == 0)
+                            nuevo.jugador = ClaseGeneral.nuevoJuego.player2;
+                            nuevo.territorio1 = ClaseGeneral.nuevoJuego.encontrarTerritorio(evaluar.nombre);
+
+                            if (vecino.tropas < evaluar.tropas)
                             {
+                                trop = vecino.tropas + 1;
+                            }
+                            else
+                            {
+                                trop = evaluar.tropas;
+                            }
 
-                                Movimiento nuevo = new Movimiento();
-                                int trop = 0;
-
-                                nuevo.jugador = ClaseGeneral.nuevoJuego.player2;
-                                nuevo.territorio1 = ClaseGeneral.nuevoJuego.encontrarTerritorio(evaluar.nombre);
-
-                                if (vecino.tropas < evaluar.tropas)
-                                {
-                                    trop = vecino.tropas+1;
-                                }
-                                else
-                                {
-                                    trop = evaluar.tropas;
-                                }
-
-                                nuevo.tropas = 5;
+                            nuevo.tropas = 5;
 
 
 
-                                //Actuliza las tropas que le quedan por asignar al IA
+                            //Actuliza las tropas que le quedan por asignar al IA
 
-                                ClaseGeneral.nuevoJuego.player2.tropas = 0;
+                            ClaseGeneral.nuevoJuego.player2.tropas = 0;
 
-                                nuevo.descrip = "asignar";
-                                ClaseGeneral.nuevoJuego.nuevoAsignar(ClaseGeneral.nuevoJuego.player2.nick, nuevo);
+                            nuevo.descrip = "asignar";
+                            ClaseGeneral.nuevoJuego.nuevoAsignar(ClaseGeneral.nuevoJuego.player2.nick, nuevo);
 
+                            if (trop != 0)
+                            {
                                 nuevo.tropas = trop;
                                 string t1 = evaluar.nombre; string t2 = vecino.nombre;
 
@@ -120,56 +122,59 @@ namespace ProyectoTS
 
                                 nuevo.territorio2 = ClaseGeneral.nuevoJuego.encontrarTerritorio(vecino.nombre);
                                 ClaseGeneral.nuevoJuego.nuevoMovimiento(ClaseGeneral.nuevoJuego.player2.nick, nuevo);
-
-
                             }
 
+                        }
 
+
+                    }
+                    else
+                    {
+                        Movimiento nuevo = new Movimiento();
+                        int trop = 0;
+
+                        nuevo.jugador = ClaseGeneral.nuevoJuego.player2;
+                        nuevo.territorio1 = ClaseGeneral.nuevoJuego.encontrarTerritorio(evaluar.nombre);
+                        if (vecino.tropas < evaluar.tropas)
+                        {
+                            trop = vecino.tropas + 1;
                         }
                         else
                         {
-                            Movimiento nuevo = new Movimiento();
-                            int trop = 0;
 
-                            nuevo.jugador = ClaseGeneral.nuevoJuego.player2;
-                            nuevo.territorio1 = ClaseGeneral.nuevoJuego.encontrarTerritorio(evaluar.nombre);
-                            if (vecino.tropas < evaluar.tropas)
-                            {
-                                trop = vecino.tropas+1;
-                            }
-                            else
-                            {
-                                trop = evaluar.tropas;
-                            }
 
-                            nuevo.tropas = 5;
+                            trop = evaluar.tropas;
+                        }
+
+                        nuevo.tropas = 5;
 
 
 
-                            //Actuliza las tropas que le quedan por asignar al IA
-                            
-                            ClaseGeneral.nuevoJuego.player2.tropas = 0;
+                        //Actuliza las tropas que le quedan por asignar al IA
 
-                            nuevo.descrip = "asignar";
-                            ClaseGeneral.nuevoJuego.nuevoAsignar(ClaseGeneral.nuevoJuego.player2.nick, nuevo);
+                        ClaseGeneral.nuevoJuego.player2.tropas = 0;
 
+                        nuevo.descrip = "asignar";
+                        ClaseGeneral.nuevoJuego.nuevoAsignar(ClaseGeneral.nuevoJuego.player2.nick, nuevo);
+
+                        if(trop!=0){
                             nuevo.tropas = trop;
-                            string t1 = evaluar.nombre; string t2 = vecino.nombre;
+                        string t1 = evaluar.nombre; string t2 = vecino.nombre;
 
-                            if (ClaseGeneral.nuevoJuego.validarConquistador(ClaseGeneral.nuevoJuego.encontrarTerritorio(t1),
-                                ClaseGeneral.nuevoJuego.encontrarTerritorio(t2)))
-                            {
-                                nuevo.descrip = "mover";
-                            }
-                            else
-                            {
-                                nuevo.descrip = "atacar";
-                            }
+                        if (ClaseGeneral.nuevoJuego.validarConquistador(ClaseGeneral.nuevoJuego.encontrarTerritorio(t1),
+                            ClaseGeneral.nuevoJuego.encontrarTerritorio(t2)))
+                        {
+                            nuevo.descrip = "mover";
+                        }
+                        else
+                        {
+                            nuevo.descrip = "atacar";
+                        }
 
-                            nuevo.territorio2 = ClaseGeneral.nuevoJuego.encontrarTerritorio(vecino.nombre);
-                            ClaseGeneral.nuevoJuego.nuevoMovimiento(ClaseGeneral.nuevoJuego.player2.nick, nuevo);
+                        nuevo.territorio2 = ClaseGeneral.nuevoJuego.encontrarTerritorio(vecino.nombre);
+                        ClaseGeneral.nuevoJuego.nuevoMovimiento(ClaseGeneral.nuevoJuego.player2.nick, nuevo);
 
-
+                    }
                         }
                     
 
@@ -240,24 +245,25 @@ namespace ProyectoTS
 
                                 ClaseGeneral.nuevoJuego.player2.tropas = 0;
 
-                           
 
-                                nuevo.tropas = trop;
-                                string t1 = item.nombre; string t2 = vecino.nombre;
-
-                                if (ClaseGeneral.nuevoJuego.validarConquistador(ClaseGeneral.nuevoJuego.encontrarTerritorio(t1),
-                                    ClaseGeneral.nuevoJuego.encontrarTerritorio(t2)))
+                                if (trop != 0)
                                 {
-                                    nuevo.descrip = "mover";
-                                }
-                                else
-                                {
-                                    nuevo.descrip = "atacar";
-                                }
+                                    nuevo.tropas = trop;
+                                    string t1 = item.nombre; string t2 = vecino.nombre;
 
-                                nuevo.territorio2 = ClaseGeneral.nuevoJuego.encontrarTerritorio(vecino.nombre);
-                                ClaseGeneral.nuevoJuego.nuevoMovimiento(ClaseGeneral.nuevoJuego.player2.nick, nuevo);
+                                    if (ClaseGeneral.nuevoJuego.validarConquistador(ClaseGeneral.nuevoJuego.encontrarTerritorio(t1),
+                                        ClaseGeneral.nuevoJuego.encontrarTerritorio(t2)))
+                                    {
+                                        nuevo.descrip = "mover";
+                                    }
+                                    else
+                                    {
+                                        nuevo.descrip = "atacar";
+                                    }
 
+                                    nuevo.territorio2 = ClaseGeneral.nuevoJuego.encontrarTerritorio(vecino.nombre);
+                                    ClaseGeneral.nuevoJuego.nuevoMovimiento(ClaseGeneral.nuevoJuego.player2.nick, nuevo);
+                                }
 
                             }
 
@@ -278,23 +284,24 @@ namespace ProyectoTS
                                 trop = item.tropas;
                             }
 
-                           
-                            nuevo.tropas = trop;
-                            string t1 = item.nombre; string t2 = vecino.nombre;
-
-                            if (ClaseGeneral.nuevoJuego.validarConquistador(ClaseGeneral.nuevoJuego.encontrarTerritorio(t1),
-                                ClaseGeneral.nuevoJuego.encontrarTerritorio(t2)))
+                            if (trop != 0)
                             {
-                                nuevo.descrip = "mover";
-                            }
-                            else
-                            {
-                                nuevo.descrip = "atacar";
-                            }
+                                nuevo.tropas = trop;
+                                string t1 = item.nombre; string t2 = vecino.nombre;
 
-                            nuevo.territorio2 = ClaseGeneral.nuevoJuego.encontrarTerritorio(vecino.nombre);
-                            ClaseGeneral.nuevoJuego.nuevoMovimiento(ClaseGeneral.nuevoJuego.player2.nick, nuevo);
+                                if (ClaseGeneral.nuevoJuego.validarConquistador(ClaseGeneral.nuevoJuego.encontrarTerritorio(t1),
+                                    ClaseGeneral.nuevoJuego.encontrarTerritorio(t2)))
+                                {
+                                    nuevo.descrip = "mover";
+                                }
+                                else
+                                {
+                                    nuevo.descrip = "atacar";
+                                }
 
+                                nuevo.territorio2 = ClaseGeneral.nuevoJuego.encontrarTerritorio(vecino.nombre);
+                                ClaseGeneral.nuevoJuego.nuevoMovimiento(ClaseGeneral.nuevoJuego.player2.nick, nuevo);
+                            }
 
                         }
                     }
