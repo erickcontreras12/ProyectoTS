@@ -56,8 +56,9 @@ namespace ProyectoTS
                 opc1 = obj.Next(0, AuxiliarIA.Count - 1);
 
                 Territorio evaluar;
-            
-               
+              List<Territorio> evaluar2=new List<Territorio>();
+
+
 
 
 
@@ -65,55 +66,94 @@ namespace ProyectoTS
                 if (AuxiliarIA.Exists(x=>(x.tropas<3)&&x.vecinos.Exists(y=>y.amo.Equals(ClaseGeneral.nuevoJuego.player1)))){
 
                     evaluar = AuxiliarIA.Find(x => (x.tropas < 3) && x.vecinos.Exists(y => y.amo.Equals(ClaseGeneral.nuevoJuego.player1)));
+                   
+                        int minno = evaluar.vecinos.Min(x => x.tropas);
 
-                    
-                }
-                else
-                {
-
-                 
-                    int maxno = AuxiliarIA.Max(x => x.tropas);
-
-                    evaluar = AuxiliarIA.Find(x => x.tropas == maxno&&(x.vecinos.Exists(y=>y.tropas<2&&(y.vecinos.Exists(c=>c.tropas<2)))));
-                     
-                    if (evaluar == null)
-                    {
-                        evaluar = AuxiliarIA.Find(x => x.tropas == maxno);
-                    }
-
-                }
-                 int minno=evaluar.vecinos.Min(x => x.tropas);
-
-              Territorio vecino= evaluar.vecinos.Find(x => x.tropas == minno);
-
-
-                if (vecino.amo == ClaseGeneral.nuevoJuego.player1)
-                    {
-
-                        int ataque_defensa = 3;
-                        ataque_defensa = obj.Next(0, 2);
-
-                        if (ataque_defensa == 0)
+                        Territorio vecino = evaluar.vecinos.Find(x => x.tropas == minno);
+                        if (vecino.amo == ClaseGeneral.nuevoJuego.player1)
                         {
 
+                            int ataque_defensa = 3;
+                            ataque_defensa = obj.Next(0, 2);
+
+                            if (ataque_defensa == 0)
+                            {
+
+                                Movimiento nuevo = new Movimiento();
+                                int trop = 0;
+
+                                nuevo.jugador = ClaseGeneral.nuevoJuego.player2;
+                                nuevo.territorio1 = ClaseGeneral.nuevoJuego.encontrarTerritorio(evaluar.nombre);
+
+                                if (vecino.tropas < evaluar.tropas)
+                                {
+                                    trop = vecino.tropas+1;
+                                }
+                                else
+                                {
+                                    trop = evaluar.tropas;
+                                }
+
+                                nuevo.tropas = 5;
+
+
+
+                                //Actuliza las tropas que le quedan por asignar al IA
+
+                                ClaseGeneral.nuevoJuego.player2.tropas = 0;
+
+                                nuevo.descrip = "asignar";
+                                ClaseGeneral.nuevoJuego.nuevoAsignar(ClaseGeneral.nuevoJuego.player2.nick, nuevo);
+
+                                nuevo.tropas = trop;
+                                string t1 = evaluar.nombre; string t2 = vecino.nombre;
+
+                                if (ClaseGeneral.nuevoJuego.validarConquistador(ClaseGeneral.nuevoJuego.encontrarTerritorio(t1),
+                                    ClaseGeneral.nuevoJuego.encontrarTerritorio(t2)))
+                                {
+                                    nuevo.descrip = "mover";
+                                }
+                                else
+                                {
+                                    nuevo.descrip = "atacar";
+                                }
+
+                                nuevo.territorio2 = ClaseGeneral.nuevoJuego.encontrarTerritorio(vecino.nombre);
+                                ClaseGeneral.nuevoJuego.nuevoMovimiento(ClaseGeneral.nuevoJuego.player2.nick, nuevo);
+
+
+                            }
+
+
+                        }
+                        else
+                        {
                             Movimiento nuevo = new Movimiento();
                             int trop = 0;
 
                             nuevo.jugador = ClaseGeneral.nuevoJuego.player2;
                             nuevo.territorio1 = ClaseGeneral.nuevoJuego.encontrarTerritorio(evaluar.nombre);
-                            trop = obj.Next(1, nuevo.jugador.tropas + 1);
-                            nuevo.tropas = trop;
+                            if (vecino.tropas < evaluar.tropas)
+                            {
+                                trop = vecino.tropas+1;
+                            }
+                            else
+                            {
+                                trop = evaluar.tropas;
+                            }
+
+                            nuevo.tropas = 5;
 
 
 
                             //Actuliza las tropas que le quedan por asignar al IA
-                            int newTropas = ClaseGeneral.nuevoJuego.player2.tropas - trop;
-                            ClaseGeneral.nuevoJuego.player2.tropas = newTropas;
+                            
+                            ClaseGeneral.nuevoJuego.player2.tropas = 0;
 
                             nuevo.descrip = "asignar";
                             ClaseGeneral.nuevoJuego.nuevoAsignar(ClaseGeneral.nuevoJuego.player2.nick, nuevo);
 
-
+                            nuevo.tropas = trop;
                             string t1 = evaluar.nombre; string t2 = vecino.nombre;
 
                             if (ClaseGeneral.nuevoJuego.validarConquistador(ClaseGeneral.nuevoJuego.encontrarTerritorio(t1),
@@ -129,48 +169,145 @@ namespace ProyectoTS
                             nuevo.territorio2 = ClaseGeneral.nuevoJuego.encontrarTerritorio(vecino.nombre);
                             ClaseGeneral.nuevoJuego.nuevoMovimiento(ClaseGeneral.nuevoJuego.player2.nick, nuevo);
 
-                         
+
                         }
-                                        
+                    
 
-                    }
-                    else
+                }
+                else
+                {
+                    int minnoeva = AuxiliarIA.Min(x => x.tropas);
+                    evaluar = AuxiliarIA.Find(x => (x.tropas == minnoeva));
+                    int maxno = AuxiliarIA.Max(x => x.tropas);
+
+                    evaluar2 = AuxiliarIA.FindAll(x => x.tropas <= maxno|| (x.tropas>= maxno-2) &&(x.vecinos.Exists(y=>y.tropas<2&&(y.vecinos.Exists(c=>c.tropas<2)))));
+                     
+                    if (evaluar2.Count == 0)
                     {
-                        Movimiento nuevo = new Movimiento();
-                        int trop = 0;
+                        evaluar2 = AuxiliarIA.FindAll(x => x.tropas == maxno || (x.tropas >= maxno - 2));
+                    }
 
-                        nuevo.jugador = ClaseGeneral.nuevoJuego.player2;
-                        nuevo.territorio1 = ClaseGeneral.nuevoJuego.encontrarTerritorio(evaluar.nombre);
-                        trop = obj.Next(1, evaluar.tropas + 1);
-                        nuevo.tropas = 5;
+                    Movimiento nuevo = new Movimiento();
+                    int trop = 0;
 
+                    nuevo.jugador = ClaseGeneral.nuevoJuego.player2;
+                    nuevo.territorio1 = ClaseGeneral.nuevoJuego.encontrarTerritorio(evaluar.nombre);
 
+                
+                    nuevo.tropas = 5;
+                    ClaseGeneral.nuevoJuego.player2.tropas = 0;
+                    nuevo.descrip = "asignar";
+                    ClaseGeneral.nuevoJuego.nuevoAsignar(ClaseGeneral.nuevoJuego.player2.nick, nuevo);
 
-                        //Actuliza las tropas que le quedan por asignar al IA
-                        int newTropas = 0;
-                        ClaseGeneral.nuevoJuego.player2.tropas = newTropas;
+                    //Actuliza las tropas que le quedan por asignar al IA
 
-                        nuevo.descrip = "asignar";
-                        ClaseGeneral.nuevoJuego.nuevoAsignar(ClaseGeneral.nuevoJuego.player2.nick, nuevo);
+    
 
-                    nuevo.tropas = trop;
-                        string t1 = evaluar.nombre; string t2 = vecino.nombre;
+                   
+                    foreach (Territorio item in evaluar2)
+                    {
+                        int minno = item.vecinos.Min(x => x.tropas);
 
-                        if (ClaseGeneral.nuevoJuego.validarConquistador(ClaseGeneral.nuevoJuego.encontrarTerritorio(t1),
-                            ClaseGeneral.nuevoJuego.encontrarTerritorio(t2)))
+                        Territorio vecino = item.vecinos.Find(x => x.tropas == minno);
+                        if (vecino.amo == ClaseGeneral.nuevoJuego.player1)
                         {
-                            nuevo.descrip = "mover";
+
+                            int ataque_defensa = 3;
+                            ataque_defensa = obj.Next(0, 2);
+
+                            if (ataque_defensa == 0)
+                            {
+
+                               
+
+                                nuevo.jugador = ClaseGeneral.nuevoJuego.player2;
+                                nuevo.territorio1 = ClaseGeneral.nuevoJuego.encontrarTerritorio(item.nombre);
+
+                                if (vecino.tropas < item.tropas)
+                                {
+                                    trop = vecino.tropas+1;
+                                }
+                                else
+                                {
+                                    trop = item.tropas;
+                                }
+
+                                nuevo.tropas = 5;
+
+
+
+                                //Actuliza las tropas que le quedan por asignar al IA
+
+                                ClaseGeneral.nuevoJuego.player2.tropas = 0;
+
+                           
+
+                                nuevo.tropas = trop;
+                                string t1 = item.nombre; string t2 = vecino.nombre;
+
+                                if (ClaseGeneral.nuevoJuego.validarConquistador(ClaseGeneral.nuevoJuego.encontrarTerritorio(t1),
+                                    ClaseGeneral.nuevoJuego.encontrarTerritorio(t2)))
+                                {
+                                    nuevo.descrip = "mover";
+                                }
+                                else
+                                {
+                                    nuevo.descrip = "atacar";
+                                }
+
+                                nuevo.territorio2 = ClaseGeneral.nuevoJuego.encontrarTerritorio(vecino.nombre);
+                                ClaseGeneral.nuevoJuego.nuevoMovimiento(ClaseGeneral.nuevoJuego.player2.nick, nuevo);
+
+
+                            }
+
+
                         }
                         else
                         {
-                            nuevo.descrip = "atacar";
+                           
+
+                            nuevo.jugador = ClaseGeneral.nuevoJuego.player2;
+                            nuevo.territorio1 = ClaseGeneral.nuevoJuego.encontrarTerritorio(item.nombre);
+                            if (vecino.tropas < item.tropas)
+                            {
+                                trop = vecino.tropas+1;
+                            }
+                            else
+                            {
+                                trop = item.tropas;
+                            }
+
+                           
+                            nuevo.tropas = trop;
+                            string t1 = item.nombre; string t2 = vecino.nombre;
+
+                            if (ClaseGeneral.nuevoJuego.validarConquistador(ClaseGeneral.nuevoJuego.encontrarTerritorio(t1),
+                                ClaseGeneral.nuevoJuego.encontrarTerritorio(t2)))
+                            {
+                                nuevo.descrip = "mover";
+                            }
+                            else
+                            {
+                                nuevo.descrip = "atacar";
+                            }
+
+                            nuevo.territorio2 = ClaseGeneral.nuevoJuego.encontrarTerritorio(vecino.nombre);
+                            ClaseGeneral.nuevoJuego.nuevoMovimiento(ClaseGeneral.nuevoJuego.player2.nick, nuevo);
+
+
                         }
-
-                        nuevo.territorio2 = ClaseGeneral.nuevoJuego.encontrarTerritorio(vecino.nombre);
-                        ClaseGeneral.nuevoJuego.nuevoMovimiento(ClaseGeneral.nuevoJuego.player2.nick, nuevo);
-
-                       
                     }
+                }
+
+                
+                    
+
+                
+              
+
+
+               
 
                 
 
