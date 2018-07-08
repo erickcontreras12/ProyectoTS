@@ -573,7 +573,10 @@ namespace ProyectoTS
         {
 
             eliminarRepetidos(auxMoves);
-            //Aca debe ir el sort de auxMoves a partir de numMov
+            auxMoves.Sort(delegate (Movimiento x, Movimiento y)
+            {
+                return x.numMov.CompareTo(y.numMov);
+            });
 
             foreach (Movimiento item in auxMoves)
             {
