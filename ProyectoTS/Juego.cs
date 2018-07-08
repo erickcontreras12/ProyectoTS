@@ -573,8 +573,14 @@ namespace ProyectoTS
         {
             int contMov = 0; int mov = 0;
             Movimiento temp = new Movimiento();
+
+            eliminarRepetidos(auxMoves);
+
             while (auxMoves.Count != contMov)
             {
+                /*Valida que el movimiento evaluado sea el siguiente en numero
+                dependiendo del contador para que siga el orden de movimientos
+                intercalados entre los jugadores*/
                 temp = buscarMovimiento(mov, auxMoves);
 
                 if (temp != null)
@@ -589,61 +595,107 @@ namespace ProyectoTS
                         break;
                     }
 
-                    /*Valida que el movimiento evaluado sea el siguiente en numero
-                     dependiendo del contador para que siga el orden de movimientos
-                     intercalados entre los jugadores*/
-                    if (contMov == temp.numMov)
+                    
+
+                    /*Valida si el conquistador es el mismo por si en el movimiento
+                 * anterior cambia de amo el territorio entonces actualiza el 
+                 * movimiento*/
+                    if (validarConquistador(temp.territorio1, temp.territorio2))
                     {
-                        /*Valida si el conquistador es el mismo por si en el movimiento
-                     * anterior cambia de amo el territorio entonces actualiza el 
-                     * movimiento*/
-                        if (validarConquistador(temp.territorio1, temp.territorio2))
-                        {
-                            temp.descrip = "mover";
-                        }
-                        else
-                        {
-                            temp.descrip = "atacar";
-                        }
-
-
-                        if (temp.descrip == "mover")
-                        {
-                            temp.territorio2.tropas += temp.tropas;
-                            temp.territorio1.tropas -= temp.tropas;
-
-
-                        }
-                        else if (temp.descrip == "atacar")
-                        {
-                            /*Si las tropas enviadas son mas que las que estan
-                             * entonces el territorio cambia de amo*/
-                            if (temp.territorio2.tropas < temp.tropas && (temp.territorio2.tropas - temp.tropas) < 0)
-                            {
-                                asignarAmo(temp.jugador, temp.territorio2);
-                            }
-                            temp.territorio2.tropas = Math.Abs(temp.territorio2.tropas - temp.tropas);
-                            temp.territorio1.tropas -= temp.tropas;
-                        }
-
-                        temp.territorio1.auxTropas = temp.territorio1.tropas;
-                        temp.territorio2.auxTropas = temp.territorio2.tropas;
-
-                        moves.Add(temp);
-                        contMov++;
+                        temp.descrip = "mover";
                     }
+                    else
+                    {
+                        temp.descrip = "atacar";
+                    }
+
+
+                    if (temp.descrip == "mover")
+                    {
+                        temp.territorio2.tropas += temp.tropas;
+                        temp.territorio1.tropas -= temp.tropas;
+
+
+                    }
+                    else if (temp.descrip == "atacar")
+                    {
+                        /*Si las tropas enviadas son mas que las que estan
+                         * entonces el territorio cambia de amo*/
+                        if (temp.territorio2.tropas < temp.tropas && (temp.territorio2.tropas - temp.tropas) < 0)
+                        {
+                            asignarAmo(temp.jugador, temp.territorio2);
+                        }
+                        temp.territorio2.tropas = Math.Abs(temp.territorio2.tropas - temp.tropas);
+                        temp.territorio1.tropas -= temp.tropas;
+                    }
+
+                    temp.territorio1.auxTropas = temp.territorio1.tropas;
+                    temp.territorio2.auxTropas = temp.territorio2.tropas;
+
+                    moves.Add(temp);
+                    contMov++;
+
                 }
                 mov++;
             }
-                
-            
-            
 
+            
             auxMoves = new List<Movimiento>();
             darNuevasTropas(player1);
             darNuevasTropas(player2);
             newTurn = true;
         }
+
+
+        /// <summary>
+        /// Metodo para eliminar los movimientos repetidos en una lista de movimientos
+        /// </summary>
+        /// <param name="aux">Lista de movimientos</param>
+        public void eliminarRepetidos(List<Movimiento> aux)
+        {
+            Movimiento temp = new Movimiento();
+
+            int sum = 0;
+            //Ciclo para recorrer la lista
+            for (int i = 0; i < aux.ToArray().Length; i++)
+            {
+                if (aux.ToArray()[i] != null)
+                {
+                    temp = aux.ToArray()[i];
+
+                    //Ciclo para llevar la cuenta de cuantas veces aparece el movimiento en la lista
+                    for (int j = 0; j < aux.ToArray().Length; j++)
+                    {
+                        if (aux.ToArray()[j] == temp)
+                        {
+                            sum++;
+                        }
+                    }
+
+                    //Valida que solo este una vez si no, elimina
+                    if (sum > 1)
+                    {
+                        //Si es mayor el ciclo elimina todos los iguales
+                        for (int j = 0; j < aux.ToArray().Length; j++)
+                        {
+                            if (aux.ToArray()[j] == temp)
+                            {
+                                aux.Remove(temp);
+                            }
+                        }
+
+                        //Luego de eliminarlos todo inserta solo uno
+                        //aux.Add(temp);
+                    }
+
+                    sum = 0;
+                }
+            }
+
+            
+
+        }
+        
 
         public Movimiento buscarMovimiento(int n, List<Movimiento> mov)
         {
