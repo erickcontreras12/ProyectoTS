@@ -573,6 +573,7 @@ namespace ProyectoTS
         {
 
             eliminarRepetidos(auxMoves);
+            //Aca debe ir el sort de auxMoves a partir de numMov
 
             foreach (Movimiento item in auxMoves)
             {
