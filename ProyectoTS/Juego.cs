@@ -571,73 +571,60 @@ namespace ProyectoTS
         /// </summary>
         public void EjecutarMovimientos()
         {
-            int contMov = 0; int mov = 0;
-            Movimiento temp = new Movimiento();
 
             eliminarRepetidos(auxMoves);
 
-            while (auxMoves.Count != contMov)
+            foreach (Movimiento item in auxMoves)
             {
-                /*Valida que el movimiento evaluado sea el siguiente en numero
-                dependiendo del contador para que siga el orden de movimientos
-                intercalados entre los jugadores*/
-                temp = buscarMovimiento(mov, auxMoves);
-
-                if (temp != null)
+                if (item.tropas > item.territorio1.tropas)
                 {
-                    if (temp.tropas > temp.territorio1.tropas)
-                    {
-                        temp.tropas = temp.territorio1.tropas;
-                    }
-                    else if (temp.territorio1.tropas == 0)
-                    {
-                        auxMoves.Remove(temp);
-                        break;
-                    }
-
-                    
-
-                    /*Valida si el conquistador es el mismo por si en el movimiento
-                 * anterior cambia de amo el territorio entonces actualiza el 
-                 * movimiento*/
-                    if (validarConquistador(temp.territorio1, temp.territorio2))
-                    {
-                        temp.descrip = "mover";
-                    }
-                    else
-                    {
-                        temp.descrip = "atacar";
-                    }
+                    item.tropas = item.territorio1.tropas;
+                }
+                else if (item.territorio1.tropas == 0)
+                {
+                    auxMoves.Remove(item);
+                    break;
+                }
 
 
-                    if (temp.descrip == "mover")
-                    {
-                        temp.territorio2.tropas += temp.tropas;
-                        temp.territorio1.tropas -= temp.tropas;
+                /*Valida si el conquistador es el mismo por si en el movimiento
+             * anterior cambia de amo el territorio entonces actualiza el 
+             * movimiento*/
+                if (validarConquistador(item.territorio1, item.territorio2))
+                {
+                    item.descrip = "mover";
+                }
+                else
+                {
+                    item.descrip = "atacar";
+                }
 
 
-                    }
-                    else if (temp.descrip == "atacar")
-                    {
-                        /*Si las tropas enviadas son mas que las que estan
-                         * entonces el territorio cambia de amo*/
-                        if (temp.territorio2.tropas < temp.tropas && (temp.territorio2.tropas - temp.tropas) < 0)
-                        {
-                            asignarAmo(temp.jugador, temp.territorio2);
-                        }
-                        temp.territorio2.tropas = Math.Abs(temp.territorio2.tropas - temp.tropas);
-                        temp.territorio1.tropas -= temp.tropas;
-                    }
+                if (item.descrip == "mover")
+                {
+                    item.territorio2.tropas += item.tropas;
+                    item.territorio1.tropas -= item.tropas;
 
-                    temp.territorio1.auxTropas = temp.territorio1.tropas;
-                    temp.territorio2.auxTropas = temp.territorio2.tropas;
-
-                    moves.Add(temp);
-                    contMov++;
 
                 }
-                mov++;
+                else if (item.descrip == "atacar")
+                {
+                    /*Si las tropas enviadas son mas que las que estan
+                     * entonces el territorio cambia de amo*/
+                    if (item.territorio2.tropas < item.tropas && (item.territorio2.tropas - item.tropas) < 0)
+                    {
+                        asignarAmo(item.jugador, item.territorio2);
+                    }
+                    item.territorio2.tropas = Math.Abs(item.territorio2.tropas - item.tropas);
+                    item.territorio1.tropas -= item.tropas;
+                }
+
+                item.territorio1.auxTropas = item.territorio1.tropas;
+                item.territorio2.auxTropas = item.territorio2.tropas;
+
+                moves.Add(item);
             }
+            
 
             
             auxMoves = new List<Movimiento>();
