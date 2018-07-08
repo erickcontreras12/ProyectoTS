@@ -47,6 +47,12 @@ namespace ProyectoTS
                 /*Con la logica que implementada en el boton5 se guardan los movs
                  del IA para que se ejecuten de manera simultanea con los
                  guardados por el jugador en el metodo de abajo */
+
+                int cont = 0;
+                while (cont!=2)
+                {
+
+                    cont++;
                 List<Territorio> AuxiliarIA = new List<Territorio>();
                 AuxiliarIA = ClaseGeneral.nuevoJuego.player2.conquistados;
 
@@ -307,21 +313,14 @@ namespace ProyectoTS
                     }
                 }
 
-                
-                    
-
-                
-              
-
-
-               
-
-                
+    
 
                 radioButton1.Enabled = true;
                 ClaseGeneral.nuevoJuego.EjecutarMovimientos();
                 cargarDatos();
 
+                }
+                cont = 0;
                 if (ClaseGeneral.nuevoJuego.gameover()) {
 
                     DialogResult boton = MessageBox.Show("GAME OVER", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
