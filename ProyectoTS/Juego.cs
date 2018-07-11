@@ -572,19 +572,22 @@ namespace ProyectoTS
         public void EjecutarMovimientos()
         {
 
-            eliminarRepetidos(auxMoves);
+         //   eliminarRepetidos(auxMoves);
 
             foreach (Movimiento item in auxMoves)
             {
-                if (item.tropas > item.territorio1.tropas)
-                {
-                    item.tropas = item.territorio1.tropas;
-                }
-                else if (item.territorio1.tropas == 0)
+
+                if (item.territorio1.tropas == 0)
                 {
                     auxMoves.Remove(item);
                     break;
                 }
+
+                if (item.tropas > item.territorio1.tropas)
+                {
+                    item.tropas = item.territorio1.tropas;
+                }
+                 
 
 
                 /*Valida si el conquistador es el mismo por si en el movimiento

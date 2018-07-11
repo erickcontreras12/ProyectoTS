@@ -176,8 +176,8 @@ namespace ProyectoTS
 
                     }
                         }
-                    
 
+                   
                 }
                 else
                 {
@@ -304,23 +304,25 @@ namespace ProyectoTS
                             }
 
                         }
+
+                       
                     }
+                   
                 }
-
-                
-                    
-
-                
-              
-
-
-               
-
-                
 
                 radioButton1.Enabled = true;
                 ClaseGeneral.nuevoJuego.EjecutarMovimientos();
                 cargarDatos();
+
+
+
+
+
+
+
+
+
+
 
                 if (ClaseGeneral.nuevoJuego.gameover()) {
 
