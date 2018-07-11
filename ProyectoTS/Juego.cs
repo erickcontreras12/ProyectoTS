@@ -572,7 +572,7 @@ namespace ProyectoTS
         public void EjecutarMovimientos()
         {
 
-         //   eliminarRepetidos(auxMoves);
+         eliminarRepetidos(auxMoves);
 
             foreach (Movimiento item in auxMoves)
             {
